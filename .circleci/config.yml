@@ -35,3 +35,4 @@ jobs:
         
       # run tests!
       - run: yarn test
+      #- run: COVERALLS_REPO_TOKEN=$coveralls_repo_token npm run coveralls      
