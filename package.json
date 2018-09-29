@@ -120,6 +120,10 @@
         "lines": 98
       }
     },
+    "coveragePathIgnorePatterns": [
+      "app/containers/*",
+      "app/components/*"
+    ],
     "moduleDirectories": [
       "node_modules",
       "app"

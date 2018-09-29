@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
@@ -33,6 +34,10 @@ class HomePage extends React.PureComponent {
     this.props.dispatch(getData());
   }
 
+  navigate(route) {
+    this.props.dispatch(push(route));
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -42,7 +47,11 @@ class HomePage extends React.PureComponent {
           <meta name="description" content="home page" />
         </Helmet>
         <div className={classes.main}>
-          <Card className={classes.card}>
+          <Card
+            raised
+            className={classes.card}
+            onClick={() => this.navigate('/donations')}
+          >
             <CardActionArea>
               <CardMedia
                 className={classes.media}

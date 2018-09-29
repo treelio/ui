@@ -6,7 +6,7 @@ const styles = () => ({
     flexGrow: 1,
     marginLeft: 30,
     marginRight: 30,
-    marginTop: 50,
+    marginTop: 30,
   },
   card: {
     alignItems: 'center',
