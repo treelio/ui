@@ -7,10 +7,10 @@ import DonationsPage from 'containers/DonationsPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import Header from 'components/Header';
-
+import styles from './styles';
 export default function App() {
   return (
-    <div style={{ backgroundColor: '#e8eaec' }}>
+    <div style={styles.root}>
       <Helmet titleTemplate="%s - Treelio" defaultTitle="Treelio">
         <meta name="description" content="" />
       </Helmet>

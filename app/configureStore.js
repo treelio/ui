@@ -29,7 +29,6 @@ const rrfConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-firebase.firestore();
 
 const createStoreWithFirebase = compose(
   reactReduxFirebase(firebase, rrfConfig), // firebase instance as first argument
