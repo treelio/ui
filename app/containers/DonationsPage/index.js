@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -22,6 +21,7 @@ import {
   BottomLeft,
   BottomRight,
 } from 'components/InvertedBorder';
+import DonationListHeader from 'components/DonationListHeader';
 
 import makeSelectData from './selectors';
 import { getData } from './actions';
@@ -48,8 +48,22 @@ class DonationsPage extends React.PureComponent {
     this.props.dispatch(push(route));
   }
 
+  renderItems(items) {
+    const { classes } = this.props;
+    return items.map(item => (
+      <ListItem key={item.id} className={classes.listItem}>
+        <Avatar className={classes.listAvatar}>
+          <img src={item.photo} alt={item.photo} />
+        </Avatar>
+        <ListItemText primary={item.name} secondary={item.brand} />
+      </ListItem>
+    ));
+  }
   render() {
     const { classes } = this.props;
+    const { data } = this.props.DonationsPage;
+    const list = data.list ? data.list : [];
+    const listCtr = list.length;
     return (
       <div className={classes.root}>
         <Helmet>
@@ -57,226 +71,54 @@ class DonationsPage extends React.PureComponent {
           <meta name="description" content="list of donations" />
         </Helmet>
         <div className={classes.main}>
-          <Card className={classes.cardTitle} elevation={0} square>
-            <CardContent>
-              <Typography
-                component="p"
-                variant="subheading"
-                className={classes.closingDate}
-              >
-                <b>List closes: 12/15/18</b>
-              </Typography>
-            </CardContent>
-            <BottomLeft />
-            <BottomRight />
-          </Card>
-          <Card
-            className={[classes.cardDonation, classes.borderTop].join(' ')}
-            elevation={0}
-            square
-          >
-            <TopLeft />
-            <TopRight />
+          <DonationListHeader {...data} />
 
-            <CardContent>
-              <Typography variant="subheading">
-                <b>Holiday Family Adoption</b>
-              </Typography>
-              <Typography component="p" variant="caption">
-                Spring Hill United Methodist Church
-              </Typography>
-              <Button
-                variant="contained"
-                className={classes.buttonPrimary}
-                size="small"
-              >
-                <Typography className={classes.donateButton}>
-                  <b>Donate</b>
-                </Typography>
-              </Button>
-            </CardContent>
+          {list.map((card, index) => (
+            <Card
+              key={card.id}
+              className={[classes.cardDonationList, classes.borderTop].join(
+                ' ',
+              )}
+              elevation={0}
+              square
+            >
+              <TopLeft />
+              <TopRight />
 
-            <BottomLeft />
-            <BottomRight />
-          </Card>
-          <Card
-            className={[classes.cardDonationList, classes.borderTop].join(' ')}
-            elevation={0}
-            square
-          >
-            <TopLeft />
-            <TopRight />
-
-            <CardContent>
-              <div className={classes.flex}>
-                <Typography className={classes.listItem} component="span">
-                  <i>
-                    <b>Boy</b>
-                  </i>
-                </Typography>
-                <span>
-                  <b className={classes.separator}>|</b>
-                </span>
-                <Typography className={classes.listItem} component="span">
-                  <i>
-                    <b>4 months old</b>
-                  </i>
-                </Typography>
-                <span>
-                  <b className={classes.separator}>|</b>
-                </span>
-                <Typography className={classes.listItem} component="span">
-                  <i>
-                    <b>Size: 3-6m</b>
-                  </i>
-                </Typography>
-              </div>
-              <List>
-                <ListItem className={classes.listItem}>
-                  <Avatar className={classes.listAvatar}>
-                    <img
-                      src="http://lorempixel.com/300/130/"
-                      alt="http://lorempixel.com/300/130/"
-                    />
-                  </Avatar>
-                  <ListItemText
-                    primary="Swaddlers Size 2"
-                    secondary="Pampers"
-                  />
-                  <Button
-                    variant="contained"
-                    size="small"
-                    disabled
-                    className={classes.listButtonDisabled}
-                  >
-                    <i>Claimed</i>
-                  </Button>
-                </ListItem>
-                <ListItem className={classes.listItem}>
-                  <Avatar className={classes.listAvatar}>
-                    <img
-                      src="http://lorempixel.com/300/130/"
-                      alt="http://lorempixel.com/300/130/"
-                    />
-                  </Avatar>
-                  <ListItemText
-                    primary="Swaddlers Size 2"
-                    secondary="Pampers"
-                  />
-                  <Button
-                    variant="contained"
-                    size="small"
-                    className={classes.listButton}
-                  >
-                    <i>Cancel</i>
-                  </Button>
-                </ListItem>
-                <ListItem className={classes.listItem}>
-                  <Avatar className={classes.listAvatar}>
-                    <img
-                      src="http://lorempixel.com/300/130/"
-                      alt="http://lorempixel.com/300/130/"
-                    />
-                  </Avatar>
-                  <ListItemText
-                    primary="Swaddlers Size 2"
-                    secondary="Pampers"
-                  />
-                </ListItem>
-              </List>
-            </CardContent>
-            <BottomLeft />
-            <BottomRight />
-          </Card>
-          <Card
-            className={[classes.cardDonationListLast, classes.borderTop].join(
-              ' ',
-            )}
-            elevation={0}
-            square
-          >
-            <TopLeft />
-            <TopRight />
-
-            <CardContent>
-              <div className={classes.flex}>
-                <Typography className={classes.listItem} component="span">
-                  <i>
-                    <b>Boy</b>
-                  </i>
-                </Typography>
-                <span>
-                  <b className={classes.separator}>|</b>
-                </span>
-                <Typography className={classes.listItem} component="span">
-                  <i>
-                    <b>4 months old</b>
-                  </i>
-                </Typography>
-                <span>
-                  <b className={classes.separator}>|</b>
-                </span>
-                <Typography className={classes.listItem} component="span">
-                  <i>
-                    <b>Size: 3-6m</b>
-                  </i>
-                </Typography>
-              </div>
-              <List>
-                <ListItem className={classes.listItem}>
-                  <Avatar className={classes.listAvatar}>
-                    <img
-                      src="http://lorempixel.com/300/130/"
-                      alt="http://lorempixel.com/300/130/"
-                    />
-                  </Avatar>
-                  <ListItemText
-                    primary="Swaddlers Size 2"
-                    secondary="Pampers"
-                  />
-                  <Button
-                    variant="contained"
-                    size="small"
-                    disabled
-                    className={classes.listButtonDisabled}
-                  >
-                    <i>Claimed</i>
-                  </Button>
-                </ListItem>
-                <ListItem className={classes.listItem}>
-                  <Avatar className={classes.listAvatar}>
-                    <img
-                      src="http://lorempixel.com/300/130/"
-                      alt="http://lorempixel.com/300/130/"
-                    />
-                  </Avatar>
-                  <ListItemText
-                    primary="Swaddlers Size 2"
-                    secondary="Pampers"
-                  />
-                  <Button
-                    variant="contained"
-                    size="small"
-                    className={classes.listButton}
-                  >
-                    <i>Cancel</i>
-                  </Button>
-                </ListItem>
-                <ListItem className={classes.listItem}>
-                  <Avatar className={classes.listAvatar}>
-                    <img
-                      src="http://lorempixel.com/300/130/"
-                      alt="http://lorempixel.com/300/130/"
-                    />
-                  </Avatar>
-                  <ListItemText
-                    primary="Swaddlers Size 2"
-                    secondary="Pampers"
-                  />
-                </ListItem>
-              </List>
-            </CardContent>
-          </Card>
+              <CardContent>
+                <div className={classes.flex}>
+                  <Typography className={classes.listItem} component="span">
+                    <i>
+                      <b>{card.for}</b>
+                    </i>
+                  </Typography>
+                  <span>
+                    <b className={classes.separator}>|</b>
+                  </span>
+                  <Typography className={classes.listItem} component="span">
+                    <i>
+                      <b>{card.age}</b>
+                    </i>
+                  </Typography>
+                  <span>
+                    <b className={classes.separator}>|</b>
+                  </span>
+                  <Typography className={classes.listItem} component="span">
+                    <i>
+                      <b>{card.size}</b>
+                    </i>
+                  </Typography>
+                </div>
+                <List>{card.items ? this.renderItems(card.items) : null}</List>
+              </CardContent>
+              {listCtr === index + 1 ? null : (
+                <div>
+                  <BottomLeft />
+                  <BottomRight />
+                </div>
+              )}
+            </Card>
+          ))}
         </div>
       </div>
     );
@@ -286,6 +128,7 @@ class DonationsPage extends React.PureComponent {
 DonationsPage.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
+  DonationsPage: PropTypes.object.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
