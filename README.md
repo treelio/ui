@@ -5,7 +5,7 @@
 
 ReactJS UI backed by Firebase
 
-## Running locally
+### Running locally
 
 * Make sure that you have Node v8 or above installed.
 * Run `npm run setup` in order to install dependencies and clean the git repo.
