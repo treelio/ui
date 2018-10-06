@@ -8,6 +8,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,6 +17,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
+
 import {
   TopLeft,
   TopRight,
@@ -22,9 +25,10 @@ import {
   BottomRight,
 } from 'components/InvertedBorder';
 import DonationListHeader from 'components/DonationListHeader';
+import DonationItemDialog from 'components/DonationItemDialog';
 
 import makeSelectData from './selectors';
-import { getData } from './actions';
+import { getData, showItemDialog, closeItemDialog } from './actions';
 import styles from './styles';
 import reducer from './reducer';
 import saga from './saga';
@@ -51,7 +55,11 @@ class DonationsPage extends React.PureComponent {
   renderItems(items) {
     const { classes } = this.props;
     return items.map(item => (
-      <ListItem key={item.id} className={classes.listItem}>
+      <ListItem
+        key={item.id}
+        className={classes.listItem}
+        onClick={this.props.onShowItemDialog(item)}
+      >
         <Avatar className={classes.listAvatar}>
           <img src={item.photo} alt={item.photo} />
         </Avatar>
@@ -61,18 +69,50 @@ class DonationsPage extends React.PureComponent {
   }
   render() {
     const { classes } = this.props;
-    const { data } = this.props.DonationsPage;
+    const { data, dialogItem, isItemDialogOpen } = this.props.DonationsPage;
     const list = data.list ? data.list : [];
     const listCtr = list.length;
+    const { program, donated_to: donatedTo } = data;
     return (
       <div className={classes.root}>
         <Helmet>
           <title>Donations</title>
           <meta name="description" content="list of donations" />
         </Helmet>
+        <DonationItemDialog
+          show={isItemDialogOpen}
+          data={dialogItem}
+          onCloseDialogAction={() => this.props.onCloseDialog()}
+        />
         <div className={classes.main}>
           <DonationListHeader {...data} />
-
+          <Card
+            className={[classes.cardDonation, classes.borderTop].join(' ')}
+            elevation={0}
+            square
+          >
+            <TopLeft />
+            <TopRight />
+            <CardContent>
+              <Typography variant="subheading" className={classes.subheading}>
+                <b>{program}</b>
+              </Typography>
+              <Typography component="p" variant="caption">
+                {donatedTo}
+              </Typography>
+              <Button
+                variant="contained"
+                className={classes.buttonPrimary}
+                size="small"
+              >
+                <Typography className={classes.donateButton}>
+                  <b>Donate</b>
+                </Typography>
+              </Button>
+            </CardContent>
+            <BottomLeft />
+            <BottomRight />
+          </Card>
           {list.map((card, index) => (
             <Card
               key={card.id}
@@ -129,10 +169,21 @@ DonationsPage.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   DonationsPage: PropTypes.object.isRequired,
+  onShowItemDialog: PropTypes.func,
+  onCloseDialog: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
-  return { dispatch };
+  return {
+    onShowItemDialog: item => evt => {
+      evt.preventDefault();
+      dispatch(showItemDialog(item));
+    },
+    onCloseDialog: () => {
+      dispatch(closeItemDialog());
+    },
+    dispatch,
+  };
 }
 const mapStateToProps = createStructuredSelector({
   DonationsPage: makeSelectData(),
@@ -150,5 +201,6 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyles(styles),
+  withStyles(styles, { withTheme: true }),
+  withMobileDialog(),
 )(DonationsPage);
