@@ -26,9 +26,18 @@ import {
 } from 'components/InvertedBorder';
 import DonationListHeader from 'components/DonationListHeader';
 import DonationItemDialog from 'components/DonationItemDialog';
+import DonationDialog from 'components/DonationDialog';
 
 import makeSelectData from './selectors';
-import { getData, showItemDialog, closeItemDialog } from './actions';
+import {
+  closeDonationDialog,
+  closeItemDialog,
+  donateMoney,
+  getData,
+  showItemDialog,
+  showDonationDialog,
+  updateDonateValue,
+} from './actions';
 import styles from './styles';
 import reducer from './reducer';
 import saga from './saga';
@@ -69,10 +78,16 @@ class DonationsPage extends React.PureComponent {
   }
   render() {
     const { classes } = this.props;
-    const { data, dialogItem, isItemDialogOpen } = this.props.DonationsPage;
+    const {
+      data,
+      dialogItem,
+      isItemDialogOpen,
+      isDonationDialogOpen,
+      donateValue,
+    } = this.props.DonationsPage;
     const list = data.list ? data.list : [];
     const listCtr = list.length;
-    const { program, donated_to: donatedTo } = data;
+    const { program, donated_to: donatedTo, id } = data;
     return (
       <div className={classes.root}>
         <Helmet>
@@ -82,7 +97,15 @@ class DonationsPage extends React.PureComponent {
         <DonationItemDialog
           show={isItemDialogOpen}
           data={dialogItem}
-          onCloseDialogAction={() => this.props.onCloseDialog()}
+          onCloseDialogAction={() => this.props.onCloseItemDialog()}
+        />
+        <DonationDialog
+          value={donateValue}
+          donationId={id}
+          show={isDonationDialogOpen}
+          onCloseDialogAction={this.props.onCloseDonationDialog}
+          onClickButtonItem={this.props.onClickButtonItem}
+          onUpdateDonationText={this.props.onUpdateDonationText}
         />
         <div className={classes.main}>
           <DonationListHeader {...data} />
@@ -104,6 +127,7 @@ class DonationsPage extends React.PureComponent {
                 variant="contained"
                 className={classes.buttonPrimary}
                 size="small"
+                onClick={this.props.onShowDonationDialog()}
               >
                 <Typography className={classes.donateButton}>
                   <b>Donate</b>
@@ -170,17 +194,38 @@ DonationsPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   DonationsPage: PropTypes.object.isRequired,
   onShowItemDialog: PropTypes.func,
-  onCloseDialog: PropTypes.func,
+  onShowDonationDialog: PropTypes.func,
+  onCloseDonationDialog: PropTypes.func,
+  onCloseItemDialog: PropTypes.func,
+  onClickButtonItem: PropTypes.func,
+  onDonate: PropTypes.func,
+  onUpdateDonationText: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
+    onClickButtonItem: val => {
+      dispatch(updateDonateValue(val));
+    },
+    onDonate: (donate, id) => {
+      dispatch(donateMoney(donate, id));
+    },
     onShowItemDialog: item => evt => {
       evt.preventDefault();
       dispatch(showItemDialog(item));
     },
-    onCloseDialog: () => {
+    onShowDonationDialog: () => evt => {
+      evt.preventDefault();
+      dispatch(showDonationDialog());
+    },
+    onCloseItemDialog: () => {
       dispatch(closeItemDialog());
+    },
+    onCloseDonationDialog: () => {
+      dispatch(closeDonationDialog());
+    },
+    onUpdateDonationText: val => {
+      dispatch(updateDonateValue(val));
     },
     dispatch,
   };
