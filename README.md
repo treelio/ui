@@ -1,9 +1,9 @@
-<img src="https://raw.githubusercontent.com/react-boilerplate/react-boilerplate-brand/master/assets/banner-metal-optimized.jpg" alt="react boilerplate banner" align="center" />
+[![CircleCI](https://circleci.com/gh/treelio/ui.svg?style=svg)](https://circleci.com/gh/treelio/ui)
+[![Coverage Status](https://coveralls.io/repos/github/treelio/ui/badge.svg?branch=master)](https://coveralls.io/github/treelio/ui?branch=master)
 
-<br />
+## Treelio UI
 
-<div align="center"><strong>Start your next react project in seconds</strong></div>
-<div align="center">A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices</div>
+ReactJS UI backed by Firebase
 
 ### Running locally
 
