@@ -54,19 +54,23 @@ const styles = () => ({
     paddingRight: 0,
   },
   listAvatar: {
+    display: 'flex',
     borderRadius: 0,
     width: 65,
     height: 65,
   },
   listButton: {
     textTransform: 'capitalize',
-    backgroundColor: '#d0021c',
+    backgroundColor: '#bf2828',
     color: '#ffffff',
     boxShadow: 'none',
   },
   listButtonDisabled: {
     textTransform: 'capitalize',
     color: '#ffffff',
+  },
+  subheading: {
+    fontSize: 20,
   },
 });
 

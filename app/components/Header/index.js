@@ -24,7 +24,7 @@ class Header extends React.Component {
         </Toolbar>
         <Toolbar className={classes.center}>
           <Typography variant="title" className={classes.title}>
-            Tweelio
+            Treelio
           </Typography>
         </Toolbar>
         <Toolbar>
