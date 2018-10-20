@@ -50,11 +50,13 @@ class DonationsPage extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.retrieveList();
+    const { match } = this.props;
+    const { params } = match;
+    this.retrieveList(params.id);
   }
 
-  retrieveList() {
-    this.props.dispatch(getData());
+  retrieveList(docId) {
+    this.props.dispatch(getData(docId));
   }
 
   navigate(route) {
@@ -85,9 +87,9 @@ class DonationsPage extends React.PureComponent {
       isDonationDialogOpen,
       donateValue,
     } = this.props.DonationsPage;
-    const list = data.list ? data.list : [];
+    const list = data.itemDonations ? data.itemDonations : [];
     const listCtr = list.length;
-    const { program, donated_to: donatedTo, id } = data;
+    const { name, donatedTo, id } = data;
     return (
       <div className={classes.root}>
         <Helmet>
@@ -118,7 +120,7 @@ class DonationsPage extends React.PureComponent {
             <TopRight />
             <CardContent>
               <Typography variant="subheading" className={classes.subheading}>
-                <b>{program}</b>
+                <b>{name}</b>
               </Typography>
               <Typography component="p" variant="caption">
                 {donatedTo}
@@ -153,7 +155,7 @@ class DonationsPage extends React.PureComponent {
                 <div className={classes.flex}>
                   <Typography className={classes.listItem} component="span">
                     <i>
-                      <b>{card.for}</b>
+                      <b>{card.gender}</b>
                     </i>
                   </Typography>
                   <span>
@@ -193,6 +195,7 @@ DonationsPage.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   DonationsPage: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
   onShowItemDialog: PropTypes.func,
   onShowDonationDialog: PropTypes.func,
   onCloseDonationDialog: PropTypes.func,

@@ -14,6 +14,7 @@ const styles = () => ({
   },
   media: {
     height: 140,
+    width: 370,
   },
 });
 

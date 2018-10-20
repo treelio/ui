@@ -1,14 +1,18 @@
-import { put, takeLatest } from 'redux-saga/effects';
-import { GET_DATA } from 'containers/HomePage/constants';
-// import firebase from 'firebase';
-import '@firebase/firestore';
-// import ReduxSagaFirebase from 'redux-saga-firebase';
+import { put, call, takeLatest } from 'redux-saga/effects';
+import { GET_DATA } from 'containers/DonationsPage/constants';
+import { getCollection } from 'utils/db';
+
 import { dataLoaded, dataLoadingError } from './actions';
 
 export function* getData() {
   try {
-    /* TODO: firebase integration */
-    yield put(dataLoaded({}));
+    const collection = yield call(getCollection, 'programs');
+    const documents = collection.docs.map(doc => {
+      const data = doc.data();
+      const docId = doc.id;
+      return { docId, ...data };
+    });
+    yield put(dataLoaded(documents));
   } catch (err) {
     yield put(dataLoadingError(err));
   }

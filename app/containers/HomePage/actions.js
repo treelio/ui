@@ -1,9 +1,8 @@
 import { GET_DATA, GET_DATA_SUCCESS, GET_DATA_ERROR } from './constants';
 
-export function getData(search = null) {
+export function getData() {
   return {
     type: GET_DATA,
-    search,
   };
 }
 

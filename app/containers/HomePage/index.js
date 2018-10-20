@@ -40,6 +40,7 @@ class HomePage extends React.PureComponent {
 
   render() {
     const { classes } = this.props;
+    const { data } = this.props.HomePage;
     return (
       <div className={classes.root}>
         <Helmet>
@@ -47,30 +48,29 @@ class HomePage extends React.PureComponent {
           <meta name="description" content="home page" />
         </Helmet>
         <div className={classes.main}>
-          <Card
-            raised
-            className={classes.card}
-            onClick={() => this.navigate('/donations')}
-          >
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                src="http://lorempixel.com/300/130/"
-                image="http://lorempixel.com/200/140/"
-                title="Contemplative Reptile"
-                height="160"
-              />
-              <CardContent>
-                <Typography gutterBottom variant="headline" component="h2">
-                  Holy Saint Anthony Catholic Church
-                </Typography>
-                <Typography component="p">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+          {data.map(card => (
+            <Card
+              key={card.id}
+              raised
+              className={classes.card}
+              onClick={() => this.navigate(`/donations/${card.docId}`)}
+            >
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  src={card.photo}
+                  image={card.photo}
+                  height="160"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="headline" component="h2">
+                    {card.donatedTo}
+                  </Typography>
+                  <Typography component="p">{card.name}</Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ))}
         </div>
       </div>
     );
@@ -80,6 +80,7 @@ class HomePage extends React.PureComponent {
 HomePage.propTypes = {
   classes: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
+  HomePage: PropTypes.object,
 };
 
 function mapDispatchToProps(dispatch) {

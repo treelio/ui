@@ -17,7 +17,7 @@ export default function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/donations" component={DonationsPage} />
+        <Route exact path="/donations/:id" component={DonationsPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>

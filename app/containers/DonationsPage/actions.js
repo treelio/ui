@@ -12,10 +12,15 @@ import {
   UPDATE_DONATE_VALUE,
 } from './constants';
 
-export function getData(search = null) {
+export function closeDonationDialog() {
   return {
-    type: GET_DATA,
-    search,
+    type: CLOSE_DONATION_DIALOG,
+  };
+}
+
+export function closeItemDialog() {
+  return {
+    type: CLOSE_ITEM_DIALOG,
   };
 }
 
@@ -54,15 +59,10 @@ export function donateMoneySuccess() {
   };
 }
 
-export function closeItemDialog() {
+export function getData(docId = null) {
   return {
-    type: CLOSE_ITEM_DIALOG,
-  };
-}
-
-export function closeDonationDialog() {
-  return {
-    type: CLOSE_DONATION_DIALOG,
+    type: GET_DATA,
+    docId,
   };
 }
 

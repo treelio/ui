@@ -10,7 +10,8 @@ import styles from './styles';
 /* eslint-disable react/prefer-stateless-function */
 class DonationListHeader extends React.Component {
   render() {
-    const { classes, closure_date: closureDate } = this.props;
+    const { classes, closureDate } = this.props;
+
     return (
       <div>
         <Card className={classes.cardTitle} elevation={0} square>
@@ -29,7 +30,7 @@ class DonationListHeader extends React.Component {
 
 DonationListHeader.propTypes = {
   classes: PropTypes.object.isRequired,
-  closure_date: PropTypes.string,
+  closureDate: PropTypes.string,
 };
 
 export default withStyles(styles)(DonationListHeader);
