@@ -19,10 +19,11 @@ class DonationDialog extends React.Component {
       onClickButtonItem,
       onCloseDialogAction,
       onUpdateDonationText,
+      onClickDonateButton,
+      programId,
       show,
       value,
     } = this.props;
-
     return (
       <Dialog
         className={classes.dialog}
@@ -107,7 +108,11 @@ class DonationDialog extends React.Component {
           </Grid>
 
           <Grid item className={classes.dialogButton}>
-            <Button variant="contained" className={classes.dialogButtonDonate}>
+            <Button
+              variant="contained"
+              className={classes.dialogButtonDonate}
+              onClick={() => onClickDonateButton(programId, value)}
+            >
               <Typography className={classes.donateButtonText}>
                 <b>Donate</b>
               </Typography>
@@ -125,6 +130,8 @@ DonationDialog.propTypes = {
   onClickButtonItem: PropTypes.func.isRequired,
   onCloseDialogAction: PropTypes.func.isRequired,
   onUpdateDonationText: PropTypes.func.isRequired,
+  onClickDonateButton: PropTypes.func.isRequired,
+  programId: PropTypes.string.isRequired,
   value: PropTypes.any,
 };
 

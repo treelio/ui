@@ -4,6 +4,7 @@ import {
   CLOSE_DONATION_DIALOG,
   CLOSE_ITEM_DIALOG,
   DONATE_MONEY,
+  DONATE_MONEY_SUCCESS,
   GET_DATA,
   GET_DATA_SUCCESS,
   GET_DATA_ERROR,
@@ -24,6 +25,7 @@ export const initialState = fromJS({
     itemName: null,
     itemBrand: null,
   },
+  docId: null,
 });
 
 function donationsReducer(state = initialState, action) {
@@ -34,6 +36,8 @@ function donationsReducer(state = initialState, action) {
       return state.set('isItemDialogOpen', false);
     case DONATE_MONEY:
       return state.set('loading', true);
+    case DONATE_MONEY_SUCCESS:
+      return state.set('loading', false).set('isDonationDialogOpen', false);
     case GET_DATA:
       return state.set('loading', true);
     case GET_DATA_SUCCESS:
@@ -41,7 +45,10 @@ function donationsReducer(state = initialState, action) {
     case GET_DATA_ERROR:
       return state.set('loading', false);
     case SHOW_DONATION_DIALOG:
-      return state.set('isDonationDialogOpen', true).set('donateValue', '$0');
+      return state
+        .set('isDonationDialogOpen', true)
+        .set('donateValue', '$0')
+        .set('docId', action.docId);
     case SHOW_ITEM_DIALOG:
       return state.set('isItemDialogOpen', true).set('dialogItem', action.item);
     case UPDATE_DONATE_VALUE:

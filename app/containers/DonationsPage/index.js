@@ -89,7 +89,9 @@ class DonationsPage extends React.PureComponent {
     } = this.props.DonationsPage;
     const list = data.itemDonations ? data.itemDonations : [];
     const listCtr = list.length;
-    const { name, donatedTo, id } = data;
+    const { name, donatedTo } = data;
+    const { match } = this.props;
+    const { params } = match;
     return (
       <div className={classes.root}>
         <Helmet>
@@ -103,11 +105,12 @@ class DonationsPage extends React.PureComponent {
         />
         <DonationDialog
           value={donateValue}
-          donationId={id}
+          programId={params.id}
           show={isDonationDialogOpen}
           onCloseDialogAction={this.props.onCloseDonationDialog}
           onClickButtonItem={this.props.onClickButtonItem}
           onUpdateDonationText={this.props.onUpdateDonationText}
+          onClickDonateButton={this.props.onClickDonateButton}
         />
         <div className={classes.main}>
           <DonationListHeader {...data} />
@@ -129,7 +132,7 @@ class DonationsPage extends React.PureComponent {
                 variant="contained"
                 className={classes.buttonPrimary}
                 size="small"
-                onClick={this.props.onShowDonationDialog()}
+                onClick={this.props.onShowDonationDialog(params.id)}
               >
                 <Typography className={classes.donateButton}>
                   <b>Donate</b>
@@ -201,7 +204,7 @@ DonationsPage.propTypes = {
   onCloseDonationDialog: PropTypes.func,
   onCloseItemDialog: PropTypes.func,
   onClickButtonItem: PropTypes.func,
-  onDonate: PropTypes.func,
+  onClickDonateButton: PropTypes.func,
   onUpdateDonationText: PropTypes.func,
 };
 
@@ -210,16 +213,21 @@ function mapDispatchToProps(dispatch) {
     onClickButtonItem: val => {
       dispatch(updateDonateValue(val));
     },
-    onDonate: (donate, id) => {
-      dispatch(donateMoney(donate, id));
-    },
     onShowItemDialog: item => evt => {
       evt.preventDefault();
       dispatch(showItemDialog(item));
     },
-    onShowDonationDialog: () => evt => {
+    onShowDonationDialog: docId => evt => {
       evt.preventDefault();
-      dispatch(showDonationDialog());
+      dispatch(showDonationDialog(docId));
+    },
+    onClickDonateButton: (docId, amount) => {
+      const value = parseInt(amount.replace('$', ''), 10);
+      if (value <= 0) {
+        // TODO error validation
+        return;
+      }
+      dispatch(donateMoney(docId, value));
     },
     onCloseItemDialog: () => {
       dispatch(closeItemDialog());

@@ -1,8 +1,8 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
-import { GET_DATA } from 'containers/DonationsPage/constants';
-import { getDocument, getCollection } from 'utils/db';
+import { DONATE_MONEY, GET_DATA } from 'containers/DonationsPage/constants';
+import { getDocument, getCollection, addDocument } from 'utils/db';
 
-import { dataLoaded, dataLoadingError } from './actions';
+import { dataLoaded, dataLoadingError, donateMoneySuccess } from './actions';
 
 export function* getData(params) {
   try {
@@ -34,9 +34,27 @@ export function* getData(params) {
   }
 }
 
+export function* donateMoney(params) {
+  try {
+    const moneyDonationsUrl = 'moneyDonations';
+    const data = {
+      programId: params.programId,
+      amount: params.amount,
+    };
+    const result = yield addDocument(moneyDonationsUrl, data);
+    if (!result) {
+      // TODO handle error
+    }
+    yield put(donateMoneySuccess());
+  } catch (err) {
+    yield put(dataLoadingError(err));
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
 export default function* treelioData() {
   yield takeLatest(GET_DATA, getData);
+  yield takeLatest(DONATE_MONEY, donateMoney);
 }
