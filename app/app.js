@@ -14,9 +14,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
-import { MuiThemeProvider } from 'material-ui/styles';
+// import { MuiThemeProvider } from 'material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 // Import root app
 import App from 'containers/App';
@@ -44,11 +44,17 @@ const MOUNT_NODE = document.getElementById('app');
 const render = messages => {
   ReactDOM.render(
     <div>
-      <CssBaseline />
       <Provider store={store}>
         <LanguageProvider messages={messages}>
           <ConnectedRouter history={history}>
-            <MuiThemeProvider theme={createMuiTheme()}>
+            <MuiThemeProvider
+              theme={createMuiTheme({
+                typography: {
+                  useNextVariants: true,
+                },
+              })}
+            >
+              <CssBaseline />
               <App />
             </MuiThemeProvider>
           </ConnectedRouter>

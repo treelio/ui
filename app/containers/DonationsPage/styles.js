@@ -59,6 +59,10 @@ const styles = () => ({
     width: 65,
     height: 65,
   },
+  avatar: {
+    width: 65,
+    height: 65,
+  },
   listButton: {
     textTransform: 'capitalize',
     backgroundColor: '#bf2828',

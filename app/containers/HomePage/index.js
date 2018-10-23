@@ -63,7 +63,7 @@ class HomePage extends React.PureComponent {
                   height="160"
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="headline" component="h2">
+                  <Typography gutterBottom variant="h5" component="h2">
                     {card.donatedTo}
                   </Typography>
                   <Typography component="p">{card.name}</Typography>
