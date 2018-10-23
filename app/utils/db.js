@@ -31,4 +31,18 @@ function getDocument(source) {
   }
 }
 
-export { getCollection, getDocument };
+function addDocument(source, data) {
+  try {
+    const db = firebase.firestore();
+    const settings = { timestampsInSnapshots: true };
+    db.settings(settings);
+    return db
+      .collection(source)
+      .add(data)
+      .then(docRef => docRef.id);
+  } catch (e) {
+    throw e;
+  }
+}
+
+export { getCollection, getDocument, addDocument };

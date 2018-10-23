@@ -38,11 +38,11 @@ export function dataLoadingError(err) {
   };
 }
 
-export function donateMoney(id, value) {
+export function donateMoney(programId, amount) {
   return {
     type: DONATE_MONEY,
-    id,
-    value,
+    programId,
+    amount,
   };
 }
 
@@ -73,9 +73,10 @@ export function showItemDialog(item) {
   };
 }
 
-export function showDonationDialog() {
+export function showDonationDialog(docId) {
   return {
     type: SHOW_DONATION_DIALOG,
+    docId,
   };
 }
 
