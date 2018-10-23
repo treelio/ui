@@ -23,7 +23,7 @@ class Header extends React.Component {
           </IconButton>
         </Toolbar>
         <Toolbar className={classes.center}>
-          <Typography variant="title" className={classes.title}>
+          <Typography variant="h6" className={classes.title}>
             Treelio
           </Typography>
         </Toolbar>

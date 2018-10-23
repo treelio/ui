@@ -40,7 +40,7 @@ class DonationItemDialog extends React.Component {
             </div>
           </Grid>
           <Grid item className={classes.dialogTextContainer}>
-            <Typography variant="headline" className={classes.dialogText}>
+            <Typography variant="h5" className={classes.dialogText}>
               <b>{name}</b>
             </Typography>
             <Typography variant="caption" gutterBottom align="center">

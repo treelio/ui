@@ -44,7 +44,7 @@ class DonationDialog extends React.Component {
         />
         <Grid container direction="column" justify="center" alignItems="center">
           <Grid item className={classes.dialogTextContainer}>
-            <Typography variant="headline" className={classes.dialogText}>
+            <Typography variant="h5" className={classes.dialogText}>
               <b>Donate</b>
             </Typography>
           </Grid>

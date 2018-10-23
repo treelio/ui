@@ -16,7 +16,7 @@ class DonationListHeader extends React.Component {
       <div>
         <Card className={classes.cardTitle} elevation={0} square>
           <CardContent>
-            <Typography component="p" variant="subheading">
+            <Typography component="p" variant="subtitle1">
               <b>List closes: {closureDate}</b>
             </Typography>
           </CardContent>

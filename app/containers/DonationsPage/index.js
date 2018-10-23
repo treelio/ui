@@ -72,7 +72,7 @@ class DonationsPage extends React.PureComponent {
         onClick={this.props.onShowItemDialog(item)}
       >
         <Avatar className={classes.listAvatar}>
-          <img src={item.photo} alt={item.photo} />
+          <img src={item.photo} alt={item.photo} className={classes.avatar} />
         </Avatar>
         <ListItemText primary={item.name} secondary={item.brand} />
       </ListItem>
@@ -122,7 +122,7 @@ class DonationsPage extends React.PureComponent {
             <TopLeft />
             <TopRight />
             <CardContent>
-              <Typography variant="subheading" className={classes.subheading}>
+              <Typography variant="subtitle1" className={classes.subheading}>
                 <b>{name}</b>
               </Typography>
               <Typography component="p" variant="caption">
